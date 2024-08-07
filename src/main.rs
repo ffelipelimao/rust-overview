@@ -68,4 +68,47 @@ fn main() {
         println!("{n}")
     }
 
+    //string regular
+    let name = "Luiz Felipe";
+    //string specify the type
+    let name2: &str = "Luiz Felipe";
+    // static string, inject on the compiler code, you can't changed this, is not dynamic string
+    let name_static: &'static str = "Estatico";
+
+    //print string
+    println!("Hello {name}");
+
+    //Mutable string to concat, use :: to instance
+    let mut name_mutable = String::from("Lebron");
+    name_mutable += " James";
+    println!("Hello {name_mutable}");
+    
+    //to be watch after set new variable if another, is not possible to use name2 anymore
+    // this is a ownership data, rust doest not allow have the same data with sam
+    // let new_name = name2;
+
+    //bypass the ownership rule using format!
+    let mut first_name = String::from("Gomez");
+    let full_name = format!("{first_name} Limao");
+    println!("Hello, {first_name}");
+
+    //bypass using push_str
+    let mut first_name = String::from("Gomez");
+    let last = String::from("Limao");
+    first_name.push_str(&last);
+
+    //creating slices with string
+    let mut slice_name_str = String::from("Caleb");
+    println!("Hello, {}", &slice_name_str[3..5]);// should print eb index 3 and index 5
+    println!("Hello, {}", &slice_name_str[..5]);// to get 0 index to 5 index
+    println!("Hello, {}", &slice_name_str[6..]);// index 6 to end
+    println!("Hello, {}", &slice_name_str[..]);// get all the elements
+
+
+    //get each elements
+    let mut each_ele = String::from("elements");
+    for e in each_ele.chars(){
+        println!("{e}")//type char
+    }
+
 }
