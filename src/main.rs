@@ -1,3 +1,5 @@
+use std::char;
+
 fn main() {
     println!("Hello, world!");
 
@@ -39,11 +41,11 @@ fn main() {
     println!("Each person gets {:.2}", slices as f64 / people as f64);
 
     // increase and decrease with mut variable 
-    let mut new_slices = 23;
+    let mut new_slices: i32 = 23;
     new_slices += 1;
 
     // using math functions
-    new_slices = new_slices.pow(2); //power of 2 
+    // new_slices = new_slices.pow(2); //power of 2 
 
     //using underscore for big numbers 
     let big = 1_000; // one thousand
@@ -101,7 +103,7 @@ fn main() {
     let mut slice_name_str = String::from("Caleb");
     println!("Hello, {}", &slice_name_str[3..5]);// should print eb index 3 and index 5
     println!("Hello, {}", &slice_name_str[..5]);// to get 0 index to 5 index
-    println!("Hello, {}", &slice_name_str[6..]);// index 6 to end
+    //println!("Hello, {}", &slice_name_str[6..]);// index 6 to end
     println!("Hello, {}", &slice_name_str[..]);// get all the elements
 
 
@@ -110,5 +112,72 @@ fn main() {
     for e in each_ele.chars(){
         println!("{e}")//type char
     }
+
+
+    //Vectors
+    let mut numbers: Vec<i32> = Vec::new();
+    numbers.push(5);
+    numbers.push(10);
+    numbers.push(20);
+
+    println!("{}", numbers.get(2).expect("index doest not exits"));
+
+    //Vectors using macros
+    let mut numbers_x2: Vec<i32> = vec![5,10,20];
+
+    //Vectors with capacity
+    let mut numbers_x3: Vec<i32> = Vec::with_capacity(3);
+
+    //Iterator with vectors
+    for num in numbers_x3.iter(){
+        println!("{num}");
+    }
+
+    //Iterator with vectors mutable
+    for num_2 in numbers_x3.iter_mut(){
+        *num_2 += 2;
+        println!("{num_2}");
+    }
+
+    //easy way to see date
+    println!("{numbers_x2:?}");
+
+    //cast array to Vec
+    let mut numbers_array = [1,2,4];
+    let mut numbers_vec = numbers_array.to_vec();
+
+    //vec can be easier to use and they are dynamic in size, you can use to another types to
+
+    //Enum - can be use outside of main
+    enum Membership {
+        Bronze, 
+        Silver,
+        Gold,
+    }
+
+    let status = Membership::Gold;
+
+    //match expression, looks like a switch case
+   let message = match status {
+        Membership::Bronze | Membership::Silver => "Basic benefits!!",
+        Membership::Gold => "All benefits",
+    };
+
+    println!("{message}");
+
+    //Option,Result
+
+    //Result quer dizer que pode ser considerado um possivel erro
+
+    let example = String::from("Limao");
+    let character = example.chars().nth(2); //pega um element especfico ao transformar em chars
+
+    //pub fn nth(&mut self, n: usize) -> Option<Self::Item> - Ao ver o nth retorna um Option que é basicamente voce ter o dado ou não
+    //o tipo do character é Option<char> então pra isso precisamos usar um match expression
+
+    let result = match character{
+        Some(character) => character,
+        None => ""
+    };
 
 }
