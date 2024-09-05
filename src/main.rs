@@ -180,4 +180,48 @@ fn main() {
         None => ""
     };
 
+
+    //em rust o correto a se falar é "if expression"
+    let age = 18;
+    if age >= 18{
+        println!("your are an adult");
+    } else {
+        println!("your are a child");
+    }
+
+    // podemos atribuir valor com o resultado de if 
+    let is_adult = if age >= 19 {
+        true
+    } else {
+        false
+    };
+
+    let points = 48;
+    let bonus = if points > 30{ 10 } else { -10 };
+
+    // loops
+    let mut number_loops = 0;
+
+    let result = loop {
+        number_loops += 1;
+        if number_loops == 10{
+            break; number_loops * 20;
+        }
+    };
+    
+    // while
+    while number_loops > 0{
+        number_loops -= 1;
+    }
+
+    // for in
+    for i in 1..6{
+        println!("{i}")
+    }
+
+    // for in reverse
+    for i in (1..6).rev(){
+        println!("{i}")
+    }
+
 }
