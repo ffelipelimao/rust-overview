@@ -224,4 +224,43 @@ fn main() {
         println!("{i}")
     }
 
+    // iterators
+
+    let iter_names = vec!["Test1","Test2","Test3",];
+    let mut iter_data = iter_names.iter();
+
+    let mut iter_item = iter_data.next();
+
+    let value = match iter_item{
+        Some(item) => "item",
+        None => ()
+    };
+
+    // closures e iterations adapters (basicamente manipular os dados de um interator map, filter e reduce ou fold)
+
+    let vec_data = vec![1,2,3,4];
+
+    // crie o iterator, chame o map para cada elemento multiplicaar e depois o collector para devolver um vetor
+    let squared: Vec<_> = vec_data.iter().map(|x| x*x).collect();
+
+    // cria um vector com tuplas (tipo o map)
+    let products = vec![
+        ("laptop charger", 25.0),
+        ("keyboard", 22.0),
+        ("mouse", 18.0),
+        ("monitor", 30.0),
+        ("cable", 5.0),
+    ];
+
+
+    //aplica o desconto de 10% em cada produto com o iter de map com tuplas usando o || para pega o valor de cada elemento,
+    // que nesse caso é uma tupla, entao se usa ()
+    let discounted: Vec<_> = products
+        .iter()
+        .map(|(name, price)| (name, price * 0.9))
+        .collect();
+
+    println!("discounted: {:?}", discounted);
+
+    
 }
