@@ -404,8 +404,6 @@ fn main() {
 
  }
 
-
-
 fn greet(name: &str) -> String {
     return format!("Greetings {name}")
 }
