@@ -1,4 +1,8 @@
 use std::char;
+use rust_decimal_macros::dec; //importando apenas o dec 
+use std::fs;
+
+mod game_level;
 
 fn main() {
     println!("Hello, world!");
@@ -175,10 +179,11 @@ fn main() {
     //pub fn nth(&mut self, n: usize) -> Option<Self::Item> - Ao ver o nth retorna um Option que é basicamente voce ter o dado ou não
     //o tipo do character é Option<char> então pra isso precisamos usar um match expression
 
-    let result = match character{
+    /*let result = match character{
         Some(character) => character,
-        None => ""
+        None => (),
     };
+    */
 
 
     //em rust o correto a se falar é "if expression"
@@ -233,7 +238,7 @@ fn main() {
 
     let value = match iter_item{
         Some(item) => "item",
-        None => ()
+        None => &"",
     };
 
     // closures e iterations adapters (basicamente manipular os dados de um interator map, filter e reduce ou fold)
@@ -262,5 +267,166 @@ fn main() {
 
     println!("discounted: {:?}", discounted);
 
+    // Criando escopo diferentes da função main
+    {
+        let name = String::from("Scope");
+    }
+
+    // movendo valores, após isso pointer1 nao e mais acessivel
+    let pointer1 = String::from("Ownership");
+    let pointer2 = pointer1;
+
+
+    let xxxx = String::from("Reference");
+    let yyy = &xxxx;
+
+    println!("{xxxx} , {yyy}");
+
+    // let _x_mut = &mut xxxx;
+    let p_y = String::from("Ref");
+
+    //slices
+    let slices_awn = String::from("Hello World");
+    let first = &slices_awn[0..4];
+    let last = &slices_awn[6..];
+
+    //funções
+    let result = greet("Felipe");
+
+    //as vezes nem precisa return (isso é doidera)
+    let times_two = anonymous_return(2);
+
+    //closures
+    let scores = vec![1,2,3];
+    let my_print = || println!("{scores:?}");
+
+    //crates são suas dependencias, voce importa elas como use
+    // let dddd = dec!(0.1);
+
+    game::print_points();
     
+    //voce pode ter modulos dentro de modulos, e para acessar eles com super (hierarquia mesmo)
+
+    //usando mod dentro desse arquivo e ter um game_level com mesmo nome do seu mod, voce pode pegar ele de outro arquivo
+    game_level::print_game_level();
+
+    // Macros em Rust são ferramentas para gerar código automaticamente, permitindo criar trechos de código reutilizáveis e reduzindo a repetição. 
+    // Eles são usados para tarefas como criar funções, estruturas ou manipular dados de forma dinâmica.
+    
+    // Definindo uma macro chamada 'ola'
+    macro_rules! ola {
+        () => {
+        println!("Olá, mundo!");
+        };
+    }
+    
+    // Usando a macro
+      ola!();
+
+    //Se um tipo implementa uma trait, ele precisa seguir as regras e métodos definidos por ela, como uma interface em outras linguagens.
+    trait Desenhavel {
+        fn desenhar(&self);
+    }
+    
+    // Implementando a trait para uma struct
+    struct Circulo;
+    struct Quadrado;
+    
+    impl Desenhavel for Circulo {
+        fn desenhar(&self) {
+            println!("Desenhando um círculo");
+        }
+    }
+    
+    impl Desenhavel for Quadrado {
+        fn desenhar(&self) {
+            println!("Desenhando um quadrado");
+        }
+    }
+
+    let c = Circulo;
+    let q = Quadrado;
+
+    c.desenhar();
+    q.desenhar();
+
+    //structs
+    struct Player {
+        x: i32,
+        y: i32
+    }
+
+    // &mut self se refera a propria instancia do player
+    impl Player {
+        pub fn move_plyer_x(&mut self) -> i32{
+            self.x*2
+        }
+    }
+
+    // mutavel pois eu a func move_plyer_x altera seu valor
+    let mut player = Player{
+        x: 10, 
+        y: 23
+    };
+
+    println!("player x level is {}", player.x);
+    println!("player moved, now x level is {}", player.move_plyer_x());
+
+
+    //erros
+    //podemos tratar quando uma fn retorna erro com expect, porem podemos para o erro para funcao de cima com "?"
+    // let content = fs::read("ex.txt").expect("enable to read");
+    let numero = "10".parse::<i32>().expect("Erro ao converter para número");
+    println!("Número: {}", numero);
+    
+    //passando o erro pra fn de cima
+   
+    // let content = fs::read("ex.txt")?;
+    match dividir(10, 0) {
+        Ok(resultado) => println!("Resultado: {}", resultado),
+        Err(e) => println!("Erro: {}", e),
+    }
+
+    /*
+    Box é um ponteiro inteligente que aloca um valor na heap em vez da stack. 
+    Ele é útil quando você quer mover um valor grande ou de tamanho desconhecido em tempo de compilação para a heap, ou 
+    quando precisa de um tipo que tenha um tamanho fixo, como em casos de recursão.
+
+    Principais usos do Box:
+
+	1.	Alocar grandes quantidades de dados na heap.
+	2.	Trabalhar com tipos que têm tamanho desconhecido.
+	3.	Habilitar recursão em structs.
+    */
+
+     let valor = Box::new(10); // Aloca o número 10 na heap
+     println!("Valor: {}", valor);
+
+ }
+
+
+
+fn greet(name: &str) -> String {
+    return format!("Greetings {name}")
+}
+
+fn anonymous_return(n: i32) -> i32{
+    n*2
+}
+
+// criando um modulo
+mod game {
+
+    //publica para consegui importar depoi
+    pub fn print_points(){
+        println!("32")
+    }
+}
+
+pub fn dividir(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err(String::from("Divisão por zero"))
+    } else {
+        Ok(a / b)
+    }
 }
